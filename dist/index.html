@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Clearlyy Guardrail — a multilingual SOP safety audit prototype." />
+    <title>Clearlyy Guardrail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Clearlyy Guardrail home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>clearlyy</span>
+          <span class="brand-product">guardrail</span>
+        </a>
+        <div class="prototype-pill"><span></span> Interactive prototype</div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <p class="eyebrow">MULTILINGUAL SOP QUALITY ASSURANCE</p>
+          <h1>Catch what gets lost<br />in translation.</h1>
+          <p class="hero-copy">Compare frontline instructions across languages. Flag dangerous changes in numbers, warnings, and meaning—before they reach the floor.</p>
+        </section>
+
+        <section class="workspace" aria-labelledby="audit-title">
+          <div class="workspace-header">
+            <div>
+              <p class="section-kicker">NEW AUDIT</p>
+              <h2 id="audit-title">Compare instructions</h2>
+            </div>
+            <button class="example-button" id="load-example" type="button">Reload sample</button>
+          </div>
+
+          <div class="language-row">
+            <label class="select-wrap">
+              <span>Source language</span>
+              <select id="source-language" aria-label="Source language">
+                <option>English</option>
+              </select>
+            </label>
+            <span class="direction" aria-hidden="true">→</span>
+            <label class="select-wrap">
+              <span>Translation</span>
+              <select id="target-language" aria-label="Translation language">
+                <option>Hindi</option>
+                <option>Tamil</option>
+                <option>Telugu</option>
+                <option>Marathi</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="editor-grid">
+            <label class="editor-card">
+              <span class="editor-label"><span class="language-dot source"></span> Original SOP</span>
+              <textarea id="source-text" spellcheck="false">1. Switch off the tablet coating machine.&#10;&#10;2. Disconnect the machine from power for 15 minutes before cleaning.&#10;&#10;3. Wear nitrile gloves and safety goggles. Never touch exposed electrical components.&#10;&#10;4. Clean the coating pan with the approved 70% IPA solution.</textarea>
+              <span class="word-count" id="source-count">32 words</span>
+            </label>
+
+            <label class="editor-card">
+              <span class="editor-label"><span class="language-dot target"></span> Hindi translation</span>
+              <textarea id="target-text" lang="hi" spellcheck="false">1. टैबलेट कोटिंग मशीन बंद करें।&#10;&#10;2. सफाई से पहले मशीन को 5 मिनट के लिए बिजली से अलग करें।&#10;&#10;3. नाइट्राइल दस्ताने और सुरक्षा चश्मा पहनें। खुले बिजली के हिस्सों को न छुएं।&#10;&#10;4. स्वीकृत 70% IPA घोल से कोटिंग पैन साफ करें।</textarea>
+              <span class="word-count" id="target-count">42 words</span>
+            </label>
+          </div>
+
+          <div class="audit-action">
+            <p><span class="shield-icon" aria-hidden="true">✓</span> No content is stored in this prototype</p>
+            <button class="primary-button" id="audit-button" type="button">
+              <span class="button-label">Audit translation</span>
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="results" id="results" aria-live="polite" aria-hidden="true">
+          <div class="results-heading">
+            <div>
+              <p class="section-kicker">AUDIT COMPLETE</p>
+              <h2>One critical issue found</h2>
+            </div>
+            <span class="blocked-badge"><span></span> Publication blocked</span>
+          </div>
+
+          <div class="metrics-grid">
+            <article class="metric-card score-card">
+              <div class="metric-copy">
+                <span>Safety score</span>
+                <strong>62<span>/100</span></strong>
+              </div>
+              <div class="score-ring" aria-label="Safety score 62 out of 100"><span>62</span></div>
+            </article>
+            <article class="metric-card">
+              <span>Critical issues</span>
+              <strong class="danger-text">1</strong>
+              <small>Requires review</small>
+            </article>
+            <article class="metric-card">
+              <span>Warnings</span>
+              <strong>0</strong>
+              <small>No warnings found</small>
+            </article>
+            <article class="metric-card">
+              <span>Checks passed</span>
+              <strong>11</strong>
+              <small>Across 4 steps</small>
+            </article>
+          </div>
+
+          <article class="finding-card">
+            <div class="finding-topline">
+              <div class="finding-title-group">
+                <span class="severity-badge">CRITICAL</span>
+                <div>
+                  <h3>Duration mismatch</h3>
+                  <p>Step 2 · Safety procedure</p>
+                </div>
+              </div>
+              <span class="confidence">99% confidence</span>
+            </div>
+
+            <div class="comparison-grid">
+              <div class="comparison-block">
+                <span>ORIGINAL · ENGLISH</span>
+                <p>Disconnect the machine from power for <mark>15 minutes</mark> before cleaning.</p>
+              </div>
+              <div class="comparison-divider" aria-hidden="true">≠</div>
+              <div class="comparison-block translated">
+                <span>TRANSLATION · HINDI</span>
+                <p lang="hi">सफाई से पहले मशीन को <mark>5 मिनट</mark> के लिए बिजली से अलग करें।</p>
+              </div>
+            </div>
+
+            <div class="explanation">
+              <span class="alert-icon" aria-hidden="true">!</span>
+              <div>
+                <strong>Why this was flagged</strong>
+                <p>The required power-disconnection period changed from 15 minutes to 5 minutes. Cleaning the machine too early may create an electrical or mechanical safety risk.</p>
+              </div>
+            </div>
+
+            <div class="suggestion">
+              <div>
+                <span>SUGGESTED CORRECTION</span>
+                <p lang="hi">सफाई से पहले मशीन को <strong>15 मिनट</strong> के लिए बिजली से अलग करें।</p>
+              </div>
+              <button class="copy-button" id="copy-suggestion" type="button">Copy correction</button>
+            </div>
+
+            <div class="review-actions">
+              <p id="review-status">Awaiting human review</p>
+              <div>
+                <button class="secondary-button" id="dismiss-button" type="button">Dismiss finding</button>
+                <button class="resolve-button" id="resolve-button" type="button">Mark as resolved</button>
+              </div>
+            </div>
+          </article>
+
+          <p class="disclaimer">Prototype analysis using sample data. All findings require human review.</p>
+        </section>
+      </main>
+
+      <footer>
+        <span>Clearlyy Guardrail</span>
+        <span>Built as a product exploration for clearlyy.io</span>
+      </footer>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
