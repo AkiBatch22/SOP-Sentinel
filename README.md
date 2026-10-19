@@ -1,6 +1,6 @@
 # Clearlyy Guardrail
 
-Phase 1 interactive prototype for a multilingual SOP safety and localization auditor.
+Interactive prototype for a multilingual SOP safety and localization auditor.
 
 ## Run locally
 
@@ -10,14 +10,23 @@ Serve the `dist` directory with any static file server. For example:
 npx serve dist
 ```
 
-The current prototype uses a hard-coded pharma example and intentionally performs no network requests or data storage.
+The current prototype performs deterministic analysis entirely in the browser and intentionally makes no network requests or stores data.
 
-## Phase 1 behavior
+## Current behavior
 
 - Paste or edit source and translated SOP text.
-- Run a simulated twelve-check audit.
-- Review a critical duration mismatch.
+- Detect changed numbers, units, percentages, and durations.
+- Detect missing safety negations.
+- Check protected uppercase technical terms.
+- Flag missing or additional procedural steps.
+- Try pharma, manufacturing, and delivery examples.
 - Copy the suggested correction.
 - Mark the finding as resolved or dismissed.
 
-Phase 2 will replace the simulated audit with deterministic number, unit, negation, and terminology checks.
+## Tests
+
+```powershell
+node tests/engine.test.js
+```
+
+Phase 3 can add an LLM semantic comparison layer after these deterministic checks.

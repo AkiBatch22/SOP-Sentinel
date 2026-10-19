@@ -63,6 +63,8 @@ h2 { font: 700 28px/1.2 Manrope, sans-serif; letter-spacing: -.035em; margin: 0;
 
 .example-button, .copy-button { border: 0; color: var(--green); background: transparent; font-weight: 700; font-size: 13px; padding: 9px 0; }
 .example-button:hover, .copy-button:hover { color: var(--green-dark); }
+.example-picker { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; }
+.example-picker select { color: var(--ink); background: var(--wash); border: 1px solid var(--line); border-radius: 9px; padding: 9px 28px 9px 10px; font-size: 12px; font-weight: 600; text-transform: none; letter-spacing: 0; }
 
 .language-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 16px; margin: 32px 0 12px; }
 .select-wrap { display: grid; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 600; }
@@ -96,6 +98,10 @@ textarea { min-height: 220px; resize: vertical; color: var(--ink); background: t
 @keyframes reveal { to { opacity: 1; transform: translateY(0); } }
 .blocked-badge { display: inline-flex; align-items: center; gap: 8px; color: var(--red); background: var(--red-soft); border: 1px solid #f1c8c2; padding: 9px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; }
 .blocked-badge span { width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
+.blocked-badge.status-review { color: var(--amber); background: #fff6e7; border-color: #edd8b7; }
+.blocked-badge.status-review span { background: var(--amber); }
+.blocked-badge.status-pass { color: var(--green); background: #edf8f1; border-color: #cde6d6; }
+.blocked-badge.status-pass span { background: var(--green); }
 
 .metrics-grid { display: grid; grid-template-columns: 1.35fr repeat(3, 1fr); gap: 10px; margin: 26px 0 16px; }
 .metric-card { min-height: 132px; display: flex; flex-direction: column; justify-content: space-between; background: var(--wash); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
@@ -111,6 +117,12 @@ textarea { min-height: 220px; resize: vertical; color: var(--ink); background: t
 .danger-text { color: var(--red); }
 
 .finding-card { border: 1px solid #ecc3bd; border-radius: 16px; overflow: hidden; }
+.findings-list { display: grid; gap: 14px; }
+.finding-card.warning { border-color: #ead6b4; }
+.finding-card.warning .finding-topline { border-bottom-color: #efdfc4; background: linear-gradient(90deg, #fff9ed, #fff); }
+.finding-card.warning .severity-badge, .finding-card.warning .alert-icon { background: var(--amber); }
+.finding-card.warning .explanation { color: #694b20; background: #fff6e7; }
+.finding-card.warning .explanation p { color: #7b6542; }
 .finding-topline { padding: 20px 22px; border-bottom: 1px solid #f0d7d3; background: linear-gradient(90deg, #fff7f5, #fff); }
 .finding-title-group { display: flex; align-items: center; gap: 13px; }
 .finding-title-group h3 { margin: 0 0 3px; font: 700 17px/1.2 Manrope, sans-serif; }
@@ -146,6 +158,10 @@ textarea { min-height: 220px; resize: vertical; color: var(--ink); background: t
 .resolve-button:hover { background: var(--green-dark); }
 .review-actions.reviewed p { color: var(--green); font-weight: 700; }
 .review-actions.reviewed .resolve-button { background: #e1f2e8; border-color: #d2e9dc; color: var(--green); }
+.success-state { display: flex; align-items: center; gap: 18px; border: 1px solid #cee5d7; border-radius: 16px; padding: 24px; background: #f1f9f4; }
+.success-state > span { width: 42px; height: 42px; flex: 0 0 auto; display: grid; place-items: center; color: white; background: var(--green); border-radius: 50%; font-weight: 800; }
+.success-state h3 { margin: 0 0 5px; font: 700 16px/1.2 Manrope, sans-serif; }
+.success-state p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
 
 .disclaimer { margin: 18px 0 0; text-align: center; color: #89948f; font-size: 11px; }
 footer { min-height: 105px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #7f8b86; font-size: 11px; }
@@ -172,6 +188,7 @@ footer span:first-child { color: var(--ink); font-weight: 700; }
   .topbar { height: 68px; }
   .hero-copy { font-size: 16px; }
   .workspace-header, .audit-action, .results-heading, .finding-topline, .review-actions, .suggestion { align-items: stretch; flex-direction: column; }
+  .example-picker { align-items: stretch; flex-direction: column; }
   .primary-button { width: 100%; }
   .audit-action p { justify-content: center; }
   .metrics-grid { grid-template-columns: 1fr; }
