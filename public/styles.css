@@ -102,6 +102,10 @@ textarea { min-height: 220px; resize: vertical; color: var(--ink); background: t
 .blocked-badge.status-review span { background: var(--amber); }
 .blocked-badge.status-pass { color: var(--green); background: #edf8f1; border-color: #cde6d6; }
 .blocked-badge.status-pass span { background: var(--green); }
+.ai-review-note { display: flex; align-items: center; gap: 9px; margin: 16px 0 0; color: var(--green-dark); font-size: 12px; font-weight: 600; }
+.ai-review-note span { display: inline-grid; place-items: center; min-width: 25px; height: 21px; padding: 0 6px; color: white; background: var(--green); border-radius: 6px; font-size: 9px; font-weight: 800; letter-spacing: .08em; }
+.ai-review-note.degraded { color: var(--amber); }
+.ai-review-note.degraded span { background: var(--amber); }
 
 .metrics-grid { display: grid; grid-template-columns: 1.35fr repeat(3, 1fr); gap: 10px; margin: 26px 0 16px; }
 .metric-card { min-height: 132px; display: flex; flex-direction: column; justify-content: space-between; background: var(--wash); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }

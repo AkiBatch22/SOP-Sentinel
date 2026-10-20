@@ -4,13 +4,14 @@ Interactive prototype for a multilingual SOP safety and localization auditor.
 
 ## Run locally
 
-Serve the `dist` directory with any static file server. For example:
+Install dependencies and start the full-stack preview:
 
 ```powershell
-npx serve dist
+npm install
+npm run dev
 ```
 
-The current prototype performs deterministic analysis entirely in the browser and intentionally makes no network requests or stores data.
+The deterministic analysis runs in the browser. Semantic analysis runs through a server-side route so the Groq key is never exposed to visitors.
 
 ## Current behavior
 
@@ -26,7 +27,17 @@ The current prototype performs deterministic analysis entirely in the browser an
 ## Tests
 
 ```powershell
-node tests/engine.test.js
+node tests/engine.test.mjs
 ```
 
-Phase 3 can add an LLM semantic comparison layer after these deterministic checks.
+Phase 3 adds semantic comparison using Groq's free-plan `qwen/qwen3.8-27b` model. Failed or rate-limited AI calls fall back safely to deterministic findings.
+
+## Local API configuration
+
+Add your development key to `.env.local`:
+
+```text
+GROQ_API_KEY=your_key_here
+```
+
+`.env.local` is ignored by Git. Production deployments use the Sites secret environment configuration instead of committing a key.

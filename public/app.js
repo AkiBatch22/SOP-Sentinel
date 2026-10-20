@@ -71,14 +71,18 @@ function findingMarkup(finding, sourceLanguage, translationLanguage) {
     </article>`;
 }
 
-function renderResults(audit) {
+function renderResults(audit, aiReview) {
   const statusCopy = audit.status === "blocked" ? "Publication blocked" : audit.status === "review" ? "Review required" : "Ready for review";
   const findingCopy = audit.findings.length === 1 ? "One issue found" : `${audit.findings.length} issues found`;
   const cards = audit.findings.length
     ? audit.findings.map((finding) => findingMarkup(finding, "English", targetLanguage.value)).join("")
-    : `<article class="success-state"><span>✓</span><div><h3>No deterministic mismatches found</h3><p>Numbers, units, negations, protected terms, and step structure passed. Human review is still recommended.</p></div></article>`;
+    : `<article class="success-state"><span>✓</span><div><h3>No safety mismatches found</h3><p>Deterministic checks and semantic review passed. Human review is still recommended.</p></div></article>`;
+  const aiNote = aiReview.ok
+    ? `<p class="ai-review-note"><span>AI</span> Semantic review completed with ${escapeHtml(aiReview.provider)} · ${escapeHtml(aiReview.model)}</p>`
+    : `<p class="ai-review-note degraded"><span>!</span> ${escapeHtml(aiReview.error)} Deterministic findings are still shown.</p>`;
   results.innerHTML = `
     <div class="results-heading"><div><p class="section-kicker">AUDIT COMPLETE</p><h2>${findingCopy}</h2></div><span class="blocked-badge status-${audit.status}"><span></span>${statusCopy}</span></div>
+    ${aiNote}
     <div class="metrics-grid">
       <article class="metric-card score-card"><div class="metric-copy"><span>Safety score</span><strong>${audit.score}<span>/100</span></strong></div><div class="score-ring" style="--score:${audit.score}%" aria-label="Safety score ${audit.score} out of 100"><span>${audit.score}</span></div></article>
       <article class="metric-card"><span>Critical issues</span><strong class="danger-text">${audit.criticalCount}</strong><small>${audit.criticalCount ? "Requires review" : "None detected"}</small></article>
@@ -86,7 +90,7 @@ function renderResults(audit) {
       <article class="metric-card"><span>Checks passed</span><strong>${audit.passedChecks}</strong><small>Across ${audit.stepCount} steps</small></article>
     </div>
     <div class="findings-list">${cards}</div>
-    <p class="disclaimer">Deterministic prototype analysis. Passing these checks does not guarantee translation accuracy; all findings require human review.</p>`;
+    <p class="disclaimer">AI-assisted prototype analysis. Passing these checks does not guarantee translation accuracy; all findings require human review.</p>`;
   results.classList.add("visible");
   results.setAttribute("aria-hidden", "false");
 }
@@ -96,18 +100,48 @@ targetText.addEventListener("input", updateCounts);
 exampleSelect.addEventListener("change", () => loadExample(exampleSelect.value));
 targetLanguage.addEventListener("change", () => { targetLabel.innerHTML = `<span class="language-dot target"></span> ${targetLanguage.value} translation`; });
 
-auditButton.addEventListener("click", () => {
+function mergeAuditFindings(deterministicAudit, semanticFindings) {
+  const findings = [...deterministicAudit.findings, ...semanticFindings];
+  const criticalCount = findings.filter((finding) => finding.severity === "critical").length;
+  const warningCount = findings.filter((finding) => finding.severity === "warning").length;
+  return {
+    ...deterministicAudit,
+    findings,
+    criticalCount,
+    warningCount,
+    score: Math.max(0, 100 - criticalCount * 38 - warningCount * 16),
+    status: criticalCount ? "blocked" : warningCount ? "review" : "pass"
+  };
+}
+
+auditButton.addEventListener("click", async () => {
   auditButton.disabled = true;
   auditButton.classList.add("loading");
   auditButton.querySelector(".button-label").textContent = "Running deterministic checks";
+  const deterministicAudit = window.GuardrailEngine.auditSop({ sourceText: sourceText.value, targetText: targetText.value, sourceLanguage: "English", targetLanguage: targetLanguage.value });
+  auditButton.querySelector(".button-label").textContent = "Running semantic AI review";
+  let aiReview;
+  let semanticFindings = [];
+  try {
+    const response = await fetch("/api/semantic-audit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sourceText: sourceText.value, targetText: targetText.value, sourceLanguage: "English", targetLanguage: targetLanguage.value })
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Semantic review unavailable.");
+    semanticFindings = Array.isArray(payload.findings) ? payload.findings : [];
+    aiReview = { ok: true, provider: payload.provider || "Groq Free", model: payload.model || "Qwen" };
+  } catch (error) {
+    aiReview = { ok: false, error: error instanceof Error ? error.message : "Semantic review unavailable." };
+  }
+  renderResults(mergeAuditFindings(deterministicAudit, semanticFindings), aiReview);
   window.setTimeout(() => {
-    const audit = window.GuardrailEngine.auditSop({ sourceText: sourceText.value, targetText: targetText.value, sourceLanguage: "English", targetLanguage: targetLanguage.value });
-    renderResults(audit);
     auditButton.disabled = false;
     auditButton.classList.remove("loading");
     auditButton.querySelector(".button-label").textContent = "Audit again";
     window.setTimeout(() => results.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
-  }, 650);
+  }, 250);
 });
 
 results.addEventListener("click", async (event) => {

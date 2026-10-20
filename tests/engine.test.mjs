@@ -1,5 +1,7 @@
-const assert = require("node:assert/strict");
-const { auditSop, extractQuantities, parseSteps } = require("../dist/engine.js");
+import assert from "node:assert/strict";
+import "../public/engine.js";
+
+const { auditSop, extractQuantities, parseSteps } = globalThis.GuardrailEngine;
 
 function run(name, test) {
   try { test(); console.log(`✓ ${name}`); }
