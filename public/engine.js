@@ -25,8 +25,10 @@
   function parseSteps(text) {
     const normalized = normalizeDigits(text).replace(/\r/g, "").trim();
     if (!normalized) return [];
-    const numbered = normalized.split(/\n+/).map((line) => line.trim()).filter(Boolean).map((line) => line.replace(/^\d+\s*[.)\-:]\s*/, "").trim()).filter(Boolean);
-    if (numbered.length > 1) return numbered;
+    const lines = normalized.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+    const hasNumberedLine = lines.some((line) => /^\d+\s*[.)\-:]\s*/u.test(line));
+    const numbered = lines.map((line) => line.replace(/^\d+\s*[.)\-:]\s*/, "").trim()).filter(Boolean);
+    if (hasNumberedLine) return numbered;
     return normalized.split(/(?<=[.!?।])\s+/u).map((step) => step.trim()).filter(Boolean);
   }
 

@@ -18,7 +18,13 @@
           <span>clearlyy</span>
           <span class="brand-product">guardrail</span>
         </a>
-        <div class="prototype-pill"><span></span> AI-assisted prototype</div>
+        <nav class="topnav" aria-label="Product sections">
+          <a href="#audit-title">Audit</a>
+          <a href="#history">History</a>
+          <a href="#validation">Validation</a>
+          <a href="#case-study">Case study</a>
+        </nav>
+        <div class="prototype-pill"><span></span> Hiring-ready prototype</div>
       </header>
 
       <main>
@@ -78,7 +84,7 @@
           </div>
 
           <div class="audit-action">
-            <p><span class="shield-icon" aria-hidden="true">✓</span> No content is stored in this prototype</p>
+            <p><span class="shield-icon" aria-hidden="true">✓</span> Saved history stays in this browser; AI review sends the two SOPs to Groq</p>
             <button class="primary-button" id="audit-button" type="button">
               <span class="button-label">Audit translation</span>
               <span class="spinner" aria-hidden="true"></span>
@@ -88,6 +94,56 @@
         </section>
 
         <section class="results" id="results" aria-live="polite" aria-hidden="true"></section>
+
+        <section class="product-section history-section" id="history" aria-labelledby="history-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">REVIEW WORKFLOW</p>
+              <h2 id="history-title">Recent audits</h2>
+              <p>Reopen evidence or download a self-contained report. Records remain only in this browser.</p>
+            </div>
+            <button class="secondary-button" id="clear-history" type="button">Clear history</button>
+          </div>
+          <div class="history-list" id="history-list"></div>
+        </section>
+
+        <section class="product-section validation-section" id="validation" aria-labelledby="validation-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">MEASURED EVIDENCE</p>
+              <h2 id="validation-title">Synthetic regression benchmark</h2>
+              <p>Every release reruns the deterministic safety layer against 18 labeled SOP pairs.</p>
+            </div>
+            <div class="benchmark-score" id="benchmark-score" aria-live="polite"><strong>—</strong><span>agreement</span></div>
+          </div>
+          <div class="benchmark-summary" id="benchmark-summary"></div>
+          <details class="benchmark-details">
+            <summary>Inspect all 18 test cases</summary>
+            <div class="benchmark-grid" id="benchmark-grid"></div>
+          </details>
+          <p class="benchmark-caveat">This measures agreement on a small, synthetic regression set—not production translation accuracy. Semantic AI findings still require bilingual human review.</p>
+        </section>
+
+        <section class="case-study" id="case-study" aria-labelledby="case-study-title">
+          <div class="case-study-intro">
+            <p class="section-kicker">PRODUCT CASE STUDY</p>
+            <h2 id="case-study-title">A guardrail for the last mile of localization.</h2>
+            <p>Clearlyy helps teams communicate across languages. This prototype explores the quality layer between translated content and the frontline worker who acts on it.</p>
+          </div>
+          <div class="case-grid">
+            <article><span>01 · PROBLEM</span><h3>Small translation changes can become operational risk.</h3><p>A missing “not,” changed duration, or mistranslated action can alter how work is performed.</p></article>
+            <article><span>02 · APPROACH</span><h3>Rules for certainty, AI for meaning.</h3><p>Deterministic checks verify numbers, units, negations, terms, and structure. A free LLM reviews semantic fidelity.</p></article>
+            <article><span>03 · WORKFLOW</span><h3>Evidence before publication.</h3><p>Reviewers see exact source and target excerpts, confidence, suggested action, a saved audit trail, and a downloadable report.</p></article>
+            <article><span>04 · COST</span><h3>Designed for a zero-cost pilot.</h3><p>Browser-side checks handle obvious risks. Groq’s free tier is used only for meaning-level review, with safe fallback when unavailable.</p></article>
+          </div>
+          <div class="architecture-strip" aria-label="System architecture">
+            <div><span>1</span><strong>SOP pair</strong><small>Browser input</small></div><b>→</b>
+            <div><span>2</span><strong>Rule engine</strong><small>Instant deterministic checks</small></div><b>→</b>
+            <div><span>3</span><strong>Semantic API</strong><small>Server-side Groq call</small></div><b>→</b>
+            <div><span>4</span><strong>Human review</strong><small>Evidence and report</small></div>
+          </div>
+          <div class="limits-note"><strong>Deliberate limitation</strong><p>This is a decision-support tool, not an autonomous certification system. It should block obvious risk and focus human reviewers—not replace them.</p></div>
+        </section>
       </main>
 
       <footer>
@@ -96,6 +152,8 @@
       </footer>
     </div>
     <script src="./engine.js"></script>
+    <script src="./evaluation.js"></script>
     <script src="./app.js"></script>
+    <script src="./phase4.js"></script>
   </body>
 </html>

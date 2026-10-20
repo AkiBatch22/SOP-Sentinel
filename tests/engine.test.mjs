@@ -12,6 +12,10 @@ run("parses numbered SOP steps", () => {
   assert.deepEqual(parseSteps("1. First action.\n\n2. Second action."), ["First action.", "Second action."]);
 });
 
+run("strips numbering from a single-step SOP", () => {
+  assert.deepEqual(parseSteps("1. First action."), ["First action."]);
+});
+
 run("normalizes Devanagari digits and Hindi units", () => {
   assert.deepEqual(extractQuantities("१५ मिनट"), [{ value: 15, unit: "min", raw: "15 मिनट", numberRaw: "15" }]);
 });

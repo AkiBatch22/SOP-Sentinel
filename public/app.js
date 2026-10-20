@@ -83,6 +83,7 @@ function renderResults(audit, aiReview) {
   results.innerHTML = `
     <div class="results-heading"><div><p class="section-kicker">AUDIT COMPLETE</p><h2>${findingCopy}</h2></div><span class="blocked-badge status-${audit.status}"><span></span>${statusCopy}</span></div>
     ${aiNote}
+    <div class="report-toolbar"><span>Audit evidence is ready</span><button class="secondary-button" id="download-current-report" type="button">Download report</button></div>
     <div class="metrics-grid">
       <article class="metric-card score-card"><div class="metric-copy"><span>Safety score</span><strong>${audit.score}<span>/100</span></strong></div><div class="score-ring" style="--score:${audit.score}%" aria-label="Safety score ${audit.score} out of 100"><span>${audit.score}</span></div></article>
       <article class="metric-card"><span>Critical issues</span><strong class="danger-text">${audit.criticalCount}</strong><small>${audit.criticalCount ? "Requires review" : "None detected"}</small></article>
@@ -135,7 +136,16 @@ auditButton.addEventListener("click", async () => {
   } catch (error) {
     aiReview = { ok: false, error: error instanceof Error ? error.message : "Semantic review unavailable." };
   }
-  renderResults(mergeAuditFindings(deterministicAudit, semanticFindings), aiReview);
+  const mergedAudit = mergeAuditFindings(deterministicAudit, semanticFindings);
+  renderResults(mergedAudit, aiReview);
+  document.dispatchEvent(new CustomEvent("guardrail:audit-complete", { detail: {
+    audit: mergedAudit,
+    aiReview,
+    sourceText: sourceText.value,
+    targetText: targetText.value,
+    sourceLanguage: "English",
+    targetLanguage: targetLanguage.value
+  } }));
   window.setTimeout(() => {
     auditButton.disabled = false;
     auditButton.classList.remove("loading");
