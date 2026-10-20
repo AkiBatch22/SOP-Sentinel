@@ -22,6 +22,7 @@
           <a href="#audit-title">Audit</a>
           <a href="#history">History</a>
           <a href="#validation">Validation</a>
+          <a href="#pilot-lab">Pilot lab</a>
           <a href="#case-study">Case study</a>
         </nav>
         <div class="prototype-pill"><span></span> Hiring-ready prototype</div>
@@ -124,6 +125,54 @@
           <p class="benchmark-caveat">This measures agreement on a small, synthetic regression set—not production translation accuracy. Semantic AI findings still require bilingual human review.</p>
         </section>
 
+        <section class="product-section pilot-section" id="pilot-lab" aria-labelledby="pilot-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">PHASE 5 · VALIDATION LAB</p>
+              <h2 id="pilot-title">Turn reviewer judgment into evidence.</h2>
+              <p>Work through 24 pilot-style SOP pairs, label each finding, and let the dashboard calculate observed precision, recall, and latency.</p>
+            </div>
+            <span class="evidence-state" id="evidence-state"><i></i> Awaiting reviewer data</span>
+          </div>
+          <div class="pilot-metrics" id="pilot-metrics">
+            <article><span>Reviewed findings</span><strong id="metric-reviewed">0</strong><small>Human verdicts</small></article>
+            <article><span>Observed precision</span><strong id="metric-precision">—</strong><small>Confirmed ÷ labeled</small></article>
+            <article><span>Observed recall</span><strong id="metric-recall">—</strong><small>Expected issues detected</small></article>
+            <article><span>Average latency</span><strong id="metric-latency">—</strong><small>End-to-end audit</small></article>
+            <article><span>Observed AI cost</span><strong id="metric-cost">$0</strong><small>Groq free-tier prototype</small></article>
+          </div>
+          <div class="pilot-workbench">
+            <div class="pilot-selector">
+              <label for="pilot-case-select">Validation case</label>
+              <select id="pilot-case-select" aria-label="Choose a pilot validation case"></select>
+              <button class="primary-button" id="load-pilot-case" type="button">Load into auditor <span>→</span></button>
+            </div>
+            <article class="pilot-case-preview" id="pilot-case-preview"></article>
+          </div>
+          <div class="pilot-progress" id="pilot-progress" aria-label="Pilot case progress"></div>
+          <div class="reviewer-panel" id="reviewer-panel">
+            <div class="reviewer-empty"><span>◎</span><div><strong>Run a case to start human review</strong><p>After the audit, bilingual reviewers can label each finding as correct, a false positive, or uncertain.</p></div></div>
+          </div>
+          <p class="benchmark-caveat">Pilot cases are representative examples, not customer data. Replace them with consented SOPs and qualified bilingual reviewers before making production claims.</p>
+        </section>
+
+        <section class="product-section outreach-section" id="outreach" aria-labelledby="outreach-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">HIRING OUTREACH KIT</p>
+              <h2 id="outreach-title">A concrete pilot, ready to send.</h2>
+              <p>The proposal is intentionally small enough to evaluate in two weeks and specific enough to start a technical conversation.</p>
+            </div>
+            <div class="outreach-actions"><button class="secondary-button" id="download-brief" type="button">Download technical brief</button><button class="resolve-button" id="copy-outreach" type="button">Copy outreach note</button></div>
+          </div>
+          <div class="pilot-plan">
+            <article><span>WEEK 1</span><strong>30 consented SOP pairs</strong><p>Three frontline workflows, one target language, bilingual ground truth, and agreed severity labels.</p></article>
+            <article><span>WEEK 2</span><strong>Blind reviewer evaluation</strong><p>Measure issue recall, finding precision, reviewer time saved, latency, and failure modes.</p></article>
+            <article><span>DECISION</span><strong>Go/no-go with evidence</strong><p>Ship only if the guardrail improves review speed without hiding dangerous translation errors.</p></article>
+          </div>
+          <blockquote id="outreach-copy">Hi Clearlyy team — I built a working multilingual SOP guardrail tailored to the quality problem at the last mile of translation. It combines deterministic safety checks with semantic review, produces auditable evidence, and now includes a reviewer-labeled pilot harness. I’d love to run a small 30-SOP validation with your team and share the results—whether or not there is an open role.</blockquote>
+        </section>
+
         <section class="case-study" id="case-study" aria-labelledby="case-study-title">
           <div class="case-study-intro">
             <p class="section-kicker">PRODUCT CASE STUDY</p>
@@ -153,7 +202,9 @@
     </div>
     <script src="./engine.js"></script>
     <script src="./evaluation.js"></script>
+    <script src="./pilot-cases.js"></script>
     <script src="./app.js"></script>
     <script src="./phase4.js"></script>
+    <script src="./pilot.js"></script>
   </body>
 </html>

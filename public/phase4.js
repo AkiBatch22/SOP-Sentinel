@@ -14,7 +14,7 @@
   }
 
   function writeHistory(records) {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records.slice(0, 12))); }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records.slice(0, 50))); }
     catch { /* Private browsing may disable storage; the audit still works. */ }
   }
 
@@ -43,7 +43,7 @@
       <section><h3>${escapeHtml(finding.title)} <small>${escapeHtml(finding.severity.toUpperCase())}</small></h3>
       <p><b>Step:</b> ${finding.step || "Document level"} · <b>Confidence:</b> ${Math.round(finding.confidence * 100)}%</p>
       <div class="evidence"><p><b>Source</b><br>${escapeHtml(finding.source)}</p><p><b>Translation</b><br>${escapeHtml(finding.target)}</p></div>
-      <p><b>Reason:</b> ${escapeHtml(finding.explanation)}</p><p><b>Suggested action:</b> ${escapeHtml(finding.suggestion)}</p></section>`).join("") : "<section><h3>No safety mismatches found</h3><p>Automated checks passed. Human review is still recommended.</p></section>";
+      <p><b>Reason:</b> ${escapeHtml(finding.explanation)}</p><p><b>Suggested action:</b> ${escapeHtml(finding.suggestion)}</p><p><b>Reviewer verdict:</b> ${escapeHtml(record.reviews?.[finding.id]?.replaceAll("_", " ") || "Not reviewed")}</p></section>`).join("") : "<section><h3>No safety mismatches found</h3><p>Automated checks passed. Human review is still recommended.</p></section>";
     return `<!doctype html><html><head><meta charset="utf-8"><title>Clearlyy Guardrail audit ${escapeHtml(record.id)}</title><style>body{font:15px/1.55 Arial,sans-serif;color:#14231d;max-width:900px;margin:50px auto;padding:0 24px}header{border-bottom:3px solid #1e6148;padding-bottom:22px}h1{margin:0 0 6px}header p{color:#68746f}.score{font-size:42px;font-weight:800;color:#1e6148}section{border:1px solid #dce5e0;border-radius:12px;padding:20px;margin:18px 0}small{color:#a43730}.evidence{display:grid;grid-template-columns:1fr 1fr;gap:12px}.evidence p{background:#f3f6f4;padding:14px;border-radius:8px}footer{margin-top:28px;color:#78837e;font-size:12px}@media print{body{margin:20px auto}}</style></head><body><header><h1>Clearlyy Guardrail</h1><p>Multilingual SOP audit report · ${escapeHtml(new Date(record.createdAt).toLocaleString())}</p><div class="score">${record.audit.score}/100</div><p>${statusLabel(record.audit.status)} · ${record.audit.criticalCount} critical · ${record.audit.warningCount} warnings · ${record.sourceLanguage} → ${record.targetLanguage}</p></header>${findings}<footer>AI-assisted decision support. This report does not certify translation accuracy; bilingual human review is required.</footer></body></html>`;
   }
 
@@ -67,7 +67,10 @@
   document.addEventListener("guardrail:audit-complete", (event) => saveAudit(event.detail));
 
   document.querySelector("#results").addEventListener("click", (event) => {
-    if (event.target.closest("#download-current-report") && currentRecord) downloadReport(currentRecord);
+    if (event.target.closest("#download-current-report") && currentRecord) {
+      const latest = readHistory().find((record) => record.id === currentRecord.id) || currentRecord;
+      downloadReport(latest);
+    }
   });
 
   historyList.addEventListener("click", (event) => {

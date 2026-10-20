@@ -116,6 +116,7 @@ function mergeAuditFindings(deterministicAudit, semanticFindings) {
 }
 
 auditButton.addEventListener("click", async () => {
+  const auditStartedAt = performance.now();
   auditButton.disabled = true;
   auditButton.classList.add("loading");
   auditButton.querySelector(".button-label").textContent = "Running deterministic checks";
@@ -144,7 +145,9 @@ auditButton.addEventListener("click", async () => {
     sourceText: sourceText.value,
     targetText: targetText.value,
     sourceLanguage: "English",
-    targetLanguage: targetLanguage.value
+    targetLanguage: targetLanguage.value,
+    latencyMs: Math.round(performance.now() - auditStartedAt),
+    pilotCaseId: window.GuardrailPilotCurrentCaseId || null
   } }));
   window.setTimeout(() => {
     auditButton.disabled = false;

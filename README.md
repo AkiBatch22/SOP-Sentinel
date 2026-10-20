@@ -27,12 +27,16 @@ The deterministic analysis runs in the browser. Semantic analysis runs through a
 - Download a self-contained HTML audit report.
 - Run an 18-case labeled deterministic regression benchmark.
 - Explain the product rationale, architecture, pilot cost, and limitations in a built-in case study.
+- Work through a 24-case pilot-style validation queue.
+- Capture bilingual reviewer verdicts and calculate observed precision, recall, and latency.
+- Download a two-week technical pilot brief and copy a Clearlyy outreach note.
 
 ## Tests
 
 ```powershell
 node tests/engine.test.mjs
 node tests/evaluation.test.mjs
+node tests/pilot.test.mjs
 ```
 
 Phase 3 adds semantic comparison using Groq's free-plan `qwen/qwen3.8-27b` model. Failed or rate-limited AI calls fall back safely to deterministic findings.
