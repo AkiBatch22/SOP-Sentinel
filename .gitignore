@@ -24,6 +24,12 @@ yarn-error.log*
 !.env.example
 .dev.vars*
 *.pem
+*.key
+*.p12
+*.pfx
+*.jks
+credentials.json
+service-account*.json
 
 # Checkout-local tool state
 /.wrangler/
