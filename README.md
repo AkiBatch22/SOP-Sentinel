@@ -1,4 +1,4 @@
-# Clearlyy Guardrail
+# SOP Sentinel
 
 Interactive prototype for a multilingual SOP safety and localization auditor.
 
@@ -29,7 +29,7 @@ The deterministic analysis runs in the browser. Semantic analysis runs through a
 - Explain the product rationale, architecture, pilot cost, and limitations in a built-in case study.
 - Work through a 24-case pilot-style validation queue.
 - Capture bilingual reviewer verdicts and calculate observed precision, recall, and latency.
-- Download a two-week technical pilot brief and copy a Clearlyy outreach note.
+- Download a two-week technical pilot brief and copy a reusable outreach note.
 
 ## Tests
 

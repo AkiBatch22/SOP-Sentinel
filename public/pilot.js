@@ -1,5 +1,5 @@
 (function () {
-  const STORAGE_KEY = "clearlyy-guardrail-audits-v1";
+  const STORAGE_KEY = "sop-sentinel-audits-v1";
   const cases = window.GuardrailPilotCases || [];
   const caseSelect = document.querySelector("#pilot-case-select");
   const casePreview = document.querySelector("#pilot-case-preview");
@@ -136,7 +136,7 @@
 
   function technicalBrief() {
     const metrics = calculateMetrics();
-    return `# Clearlyy Guardrail — two-week validation brief\n\n## Hypothesis\nA hybrid rule-and-LLM guardrail can focus bilingual reviewers on safety-critical translation changes without becoming an autonomous certification system.\n\n## Pilot scope\n- 30 consented SOP pairs across three frontline workflows\n- One agreed target language and qualified bilingual reviewers\n- Deterministic checks for numbers, units, negations, protected terms, and structure\n- Semantic review for omissions, reversed meaning, unsafe simplification, and dependency order\n\n## Success metrics\n- Finding precision and issue recall against reviewer ground truth\n- Median end-to-end latency and reviewer time saved\n- False-positive categories and model/rule failure modes\n- Cost per audited SOP after the free-tier prototype\n\n## Current prototype evidence\n- Synthetic regression agreement: 18/18\n- Pilot-style cases audited in this browser: ${metrics.auditedCases}/${cases.length}\n- Reviewer-labeled findings: ${metrics.reviewed}\n- Observed precision: ${metrics.precision === null ? "Not enough data" : `${metrics.precision}%`}\n- Observed recall: ${metrics.recall === null ? "Not enough data" : `${metrics.recall}%`}\n- Average latency: ${metrics.latency === null ? "Not enough data" : `${metrics.latency} ms`}\n\n## Decision rule\nProceed only if the system improves review speed while meeting an agreed recall threshold for critical errors. All publication decisions remain human-owned.\n`;
+    return `# SOP Sentinel — two-week validation brief\n\n## Hypothesis\nA hybrid rule-and-LLM guardrail can focus bilingual reviewers on safety-critical translation changes without becoming an autonomous certification system.\n\n## Pilot scope\n- 30 consented SOP pairs across three frontline workflows\n- One agreed target language and qualified bilingual reviewers\n- Deterministic checks for numbers, units, negations, protected terms, and structure\n- Semantic review for omissions, reversed meaning, unsafe simplification, and dependency order\n\n## Success metrics\n- Finding precision and issue recall against reviewer ground truth\n- Median end-to-end latency and reviewer time saved\n- False-positive categories and model/rule failure modes\n- Cost per audited SOP after the free-tier prototype\n\n## Current prototype evidence\n- Synthetic regression agreement: 18/18\n- Pilot-style cases audited in this browser: ${metrics.auditedCases}/${cases.length}\n- Reviewer-labeled findings: ${metrics.reviewed}\n- Observed precision: ${metrics.precision === null ? "Not enough data" : `${metrics.precision}%`}\n- Observed recall: ${metrics.recall === null ? "Not enough data" : `${metrics.recall}%`}\n- Average latency: ${metrics.latency === null ? "Not enough data" : `${metrics.latency} ms`}\n\n## Decision rule\nProceed only if the system improves review speed while meeting an agreed recall threshold for critical errors. All publication decisions remain human-owned.\n`;
   }
 
   document.querySelector("#download-brief").addEventListener("click", () => {
@@ -144,7 +144,7 @@
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = "clearlyy-guardrail-pilot-brief.md";
+    anchor.download = "sop-sentinel-pilot-brief.md";
     anchor.click();
     URL.revokeObjectURL(url);
   });

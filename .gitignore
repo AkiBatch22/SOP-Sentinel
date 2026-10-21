@@ -38,6 +38,11 @@ yarn-error.log*
 *.tar.gz
 .site-package-stage/
 
+# Local tutorial artifacts and render QA
+/loom_script_render*/
+/*.docx
+/*.pdf
+
 # OS metadata
 .DS_Store
 
