@@ -48,8 +48,6 @@ button { cursor: pointer; }
 .brand-mark span:nth-child(2) { height: 13px; }
 .brand-mark span:nth-child(3) { height: 10px; }
 
-.prototype-pill { display: flex; align-items: center; gap: 8px; color: #53605b; font-size: 13px; font-weight: 600; background: rgba(255,255,255,.68); border: 1px solid var(--line); padding: 8px 12px; border-radius: 999px; }
-.prototype-pill span { width: 7px; height: 7px; border-radius: 50%; background: #39a96b; box-shadow: 0 0 0 4px rgba(57,169,107,.12); }
 .topnav { display: flex; align-items: center; gap: 22px; margin-left: auto; margin-right: 22px; }
 .topnav a { color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 700; }
 .topnav a:hover { color: var(--green-dark); }
@@ -325,7 +323,7 @@ footer span:first-child { color: var(--ink); font-weight: 700; }
 }
 
 @media (max-width: 560px) {
-  .brand-product, .prototype-pill { display: none; }
+  .brand-product { display: none; }
   .topbar { height: 68px; }
   .hero-copy { font-size: 16px; }
   .workspace-header, .audit-action, .results-heading, .finding-topline, .review-actions, .suggestion, .section-heading, .report-toolbar, .limits-note { align-items: stretch; flex-direction: column; }
