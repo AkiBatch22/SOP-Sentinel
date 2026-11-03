@@ -4,6 +4,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "SOP Sentinel",
   description: "Deterministic and AI-assisted multilingual SOP safety audits.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

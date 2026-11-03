@@ -11,6 +11,8 @@ const eslintConfig = defineConfig([
     ".wrangler/**",
     ".sites-runtime/**",
     "outputs/**",
+    "output/**",
+    "tmp/**",
     "work/**",
   ]),
   {

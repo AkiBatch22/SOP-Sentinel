@@ -40,6 +40,8 @@ service-account*.json
 /.agents/
 /.codex/
 /outputs/
+/output/
+/tmp/
 /work/
 *.tar.gz
 .site-package-stage/

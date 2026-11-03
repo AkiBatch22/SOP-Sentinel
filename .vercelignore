@@ -1,0 +1,11 @@
+.openai
+.sites-runtime
+.vinext
+.wrangler
+dist
+examples
+output
+tmp
+work
+*.docx
+*.pdf

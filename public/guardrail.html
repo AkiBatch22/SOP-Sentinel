@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="SOP Sentinel — a multilingual SOP safety audit prototype." />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>SOP Sentinel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,6 +26,9 @@
           <a href="#pilot-lab">Pilot lab</a>
           <a href="#case-study">Case study</a>
         </nav>
+        <form action="/api/auth/logout" method="post">
+          <button class="sign-out-button" type="submit">Sign out</button>
+        </form>
       </header>
 
       <main>

@@ -47,7 +47,11 @@
     ".vinext",
     ".wrangler",
     ".sites-runtime",
+    "vite.config.ts",
+    "scripts/vite",
     "outputs",
+    "output",
+    "tmp",
     "work"
   ]
 }

@@ -79,10 +79,28 @@ Phase 3 adds semantic comparison using Groq's free-plan `qwen/qwen3.8-27b` model
 
 ## Local API configuration
 
-Add your development key to `.env.local`:
+Copy `.env.example` to `.env.local` and replace all placeholder values:
 
 ```text
 GROQ_API_KEY=your_key_here
+SITE_PASSWORD=a-strong-founder-demo-password
+SESSION_SECRET=a-random-secret-with-at-least-32-characters
 ```
 
-`.env.local` is ignored by Git. Production deployments use the Sites secret environment configuration instead of committing a key.
+`.env.local` is ignored by Git. The password creates an eight-hour signed, HTTP-only session. Missing or invalid authentication configuration fails closed, including for the semantic API.
+
+## Private Vercel deployment
+
+1. Import `AkiBatch22/SOP-Sentinel` into Vercel and keep the detected framework as **Next.js**.
+2. In **Project settings → Environment Variables**, add `GROQ_API_KEY`, `SITE_PASSWORD`, and `SESSION_SECRET` for Production and Preview.
+3. Generate `SESSION_SECRET` as a long random value; never reuse the founder password or commit either value.
+4. Deploy. Vercel will build with `npm run build` and publish the protected URL.
+5. Open the URL in a private browser window, verify that `/guardrail.html` redirects to `/login`, sign in, run one passing and one blocked case, then sign out.
+
+The application adds `noindex` headers and metadata, but that is not an authentication mechanism. The signed-cookie gate protects the UI, static assets, and API routes. This shared-password setup is appropriate for a time-boxed prototype; production should use individual identities through an identity provider.
+
+## CI/CD
+
+- **Continuous integration:** `.github/workflows/ci.yml` runs on pull requests and pushes to `main`. It installs from the lockfile, lints, type-checks, runs authentication and SOP regression tests, and creates a production build.
+- **Continuous delivery:** Vercel's Git integration creates a protected preview for each pull request and deploys `main` to production after the configured Git checks pass. In Vercel, enable the Git setting that requires checks before production deployment.
+- **Secrets:** GitHub Actions uses non-sensitive build placeholders because no external AI request runs during CI. Real values exist only in Vercel environment variables.
